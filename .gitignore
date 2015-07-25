@@ -1,0 +1,4 @@
+bin
+obj/*.a
+obj/*.o
+obj/*.ppu
