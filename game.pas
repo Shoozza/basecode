@@ -21,9 +21,28 @@ uses
   logger,
   input;
 
+type
+  TPlayer = record
+    x, y, vx, vy: Single;
+  end;
+
+  TEntity = record
+    active: Boolean;
+    x, y, vx, vy: Single;
+  end;
+var
+  I: Integer;
+  Player: TPlayer;
+  Entities: Array [0..10] of TEntity;
+
 procedure Enter;
 begin
   ResetKeys;
+
+  for I := Low(Entities) to High(Entities) do
+  begin
+    Entities[I].active := True;
+  end;
 end;
 
 procedure Leave;
@@ -64,13 +83,26 @@ procedure Quit;
 begin
 end;
 
+procedure DrawPlayer;
+begin
+  al_draw_bitmap(Image, Player.x, Player.y, 0);
+end;
+
+procedure DrawEntities;
+begin
+  for I := Low(Entities) to High(Entities) do
+  begin
+    if Entities[I].active then
+      al_draw_bitmap(Image, Entities[I].x, Entities[I].y, 0);
+  end;
+end;
+
 procedure Draw;
-var
-  w, h: single;
 begin
   al_clear_to_color(BackgroundColor);
 
-  al_draw_bitmap(Image, 0, 40, 0);
+  DrawPlayer;
+  DrawEntities;
 
   al_draw_text(Font, al_map_rgb(0, 0, 0),
     11.0, 11.0, ALLEGRO_ALIGN_LEFT, 'The Game');
@@ -88,9 +120,62 @@ begin
   RefreshKeys;
 end;
 
+procedure UpdatePlayer;
+begin
+  Player.x := Player.x + Player.vx;
+  Player.y := Player.y + Player.vy;
+
+  if Player.vx > 0 then
+  begin
+    Player.vx := Player.vx - 1;
+  end else
+  begin
+    Player.vx := 0;
+  end;
+
+  if Player.vy > 0 then
+  begin
+    Player.vy := Player.vy - 1;
+  end else
+  begin
+    Player.vy := 0;
+  end;
+end;
+
+procedure UpdateEntities;
+begin
+  for I := Low(Entities) to High(Entities) do
+  begin
+    if Entities[I].active then
+    begin
+      Entities[I].x := Entities[I].x + Entities[I].vx;
+      Entities[I].y := Entities[I].y + Entities[I].vy;
+
+      if Entities[I].vx > 0 then
+      begin
+        Entities[I].vx := Entities[I].vx - 1;
+      end else
+      begin
+        Entities[I].vx := 0;
+      end;
+
+      if Entities[I].vy > 0 then
+      begin
+        Entities[I].vy := Entities[I].vy - 1;
+      end else
+      begin
+        Entities[I].vy := 0;
+      end;
+    end;
+  end;
+end;
+
 procedure Update;
 begin
   HandleInput;
+
+  UpdatePlayer;
+  UpdateEntities;
 end;
 
 procedure Run;
@@ -135,7 +220,6 @@ begin
       ALLEGRO_EVENT_MOUSE_BUTTON_UP:
       begin
       end;
-
     end;
 
     if NeedsRedraw and al_is_event_queue_empty(Queue) then

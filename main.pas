@@ -14,8 +14,6 @@ uses
 
 procedure Run;
 begin
-  Log('Start');
-
   framework.Load;
   game.Load;
 
@@ -23,8 +21,6 @@ begin
 
   game.Quit;
   framework.Quit;
-
-  Log('End');
 end;
 
 end.

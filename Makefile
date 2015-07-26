@@ -2,11 +2,19 @@ NAME = thegame
 
 all: 32bit
 
+deploy: deploy32bit
+
+deploy32bit:
+	@fpc ${NAME}.dpr -B -l- -MObjFPC -FUobj -FEbin -Fulib/allegro-pas5/lib -dMONOLITH -XM_al_mangled_main -O3 -WG
+
+deploy64bit:
+	@fpc ${NAME}.dpr -B -l- -MObjFPC -FUobj -FEbin -Fulib/allegro-pas5/lib -dMONOLITH -XM_al_mangled_main -O3 -WG
+
 32bit:
-	@fpc ${NAME}.dpr -B -l- -MObjFPC -FUobj -FEbin -Fulib/allegro-pas5/lib -dMONOLITH -XM_al_mangled_main -O3
+	@fpc ${NAME}.dpr -B -l- -MObjFPC -FUobj -FEbin -Fulib/allegro-pas5/lib -dMONOLITH -XM_al_mangled_main -O-
 
 64bit:
-	@fpc ${NAME}.dpr -B -l- -MObjFPC -FUobj -FEbin -Fulib/allegro-pas5/lib -dMONOLITH -XM_al_mangled_main -Px86_64
+	@fpc ${NAME}.dpr -B -l- -MObjFPC -FUobj -FEbin -Fulib/allegro-pas5/lib -dMONOLITH -XM_al_mangled_main -O- -Px86_64
 
 delphi:
 	@DCC32 $(NAME).dpr  -l-           -Nobj  -Ebin  -Ulib/allegro-pas5/lib -dMONOLITH -CC
