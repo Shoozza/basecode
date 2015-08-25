@@ -19,7 +19,8 @@ uses
   al5audio,
   globals,
   logger,
-  input;
+  input,
+  collision;
 
 type
   TPlayer = record
