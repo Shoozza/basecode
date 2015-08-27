@@ -39,6 +39,7 @@ var
 procedure Enter;
 begin
   ResetKeys;
+  ResetMouseButtons;
 
   for I := Low(Entities) to High(Entities) do
   begin
@@ -119,6 +120,7 @@ begin
     IsRunning := False;
 
   RefreshKeys;
+  RefreshMouseButtons;
 end;
 
 procedure UpdatePlayer;
@@ -216,10 +218,12 @@ begin
 
       ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
       begin
+        RefreshMouseButtonDown(Event.mouse.button);
       end;
 
       ALLEGRO_EVENT_MOUSE_BUTTON_UP:
       begin
+        RefreshMouseButtonUp(Event.mouse.button);
       end;
     end;
 
