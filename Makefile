@@ -34,6 +34,6 @@ clean:
 try: all run
 
 run:
-	@cd bin && $(NAME)
+	@cd bin && ./$(NAME)
 
 .PHONY: all run try clean delphi 32bit 64bit
