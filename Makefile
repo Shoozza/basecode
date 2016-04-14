@@ -5,13 +5,13 @@ all: 32bit
 deploy: deploy32bit
 
 deploy32bit:
-	@fpc ${NAME}.dpr -B -l- -MObjFPC -FUobj -FEbin -Fulib/allegro-pas5/lib -dMONOLITH -XM_al_mangled_main -O3 -WG
+	@fpc ${NAME}.dpr -B -l- -MObjFPC -FUobj -FEbin -Fulib/allegro-pas5/lib -dMONOLITH -XM_al_mangled_main -O3 -Pi386  -WG
 
 deploy64bit:
-	@fpc ${NAME}.dpr -B -l- -MObjFPC -FUobj -FEbin -Fulib/allegro-pas5/lib -dMONOLITH -XM_al_mangled_main -O3 -WG
+	@fpc ${NAME}.dpr -B -l- -MObjFPC -FUobj -FEbin -Fulib/allegro-pas5/lib -dMONOLITH -XM_al_mangled_main -O3 -P86_64 -WG
 
 32bit:
-	@fpc ${NAME}.dpr -B -l- -MObjFPC -FUobj -FEbin -Fulib/allegro-pas5/lib -dMONOLITH -XM_al_mangled_main -O-
+	@fpc ${NAME}.dpr -B -l- -MObjFPC -FUobj -FEbin -Fulib/allegro-pas5/lib -dMONOLITH -XM_al_mangled_main -O- -Pi386
 
 64bit:
 	@fpc ${NAME}.dpr -B -l- -MObjFPC -FUobj -FEbin -Fulib/allegro-pas5/lib -dMONOLITH -XM_al_mangled_main -O- -Px86_64
